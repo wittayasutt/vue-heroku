@@ -2,9 +2,11 @@ var express = require('express')
 var path = require('path')
 
 app = express()
-app.use(express.static(__dirname))
+app.get('/hello', (req, res) => res.send({ hi: 'there' }));
 
-var port = process.env.PORT || 8080
-app.listen(port)
+app.use(express.static('dist'));
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
 
 console.log('server started '+ port)
